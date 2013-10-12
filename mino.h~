@@ -1,0 +1,10 @@
+#pragma once
+
+class Mino {
+
+public:
+  Mino();
+  void update();
+  void draw();
+
+};
