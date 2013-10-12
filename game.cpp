@@ -1,12 +1,12 @@
 #include "game.h"
 
 Game::Game(){
-  _drawer = new Drawer();
   _keys = new Keys();
+  _drawer = new Drawer(_keys);
 }
 
 void Game::update(){
-
+  _drawer->update();
   _keys->reset();
 }
 

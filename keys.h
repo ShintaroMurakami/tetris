@@ -11,4 +11,5 @@ public:
   Keys();
   void setOn(int c);
   void reset();
+  int getKey();
 };
