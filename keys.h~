@@ -1,0 +1,9 @@
+#pragma once
+
+class Key {
+  int _on_key;
+public:
+  Key();
+  void onKey(int c);
+
+}

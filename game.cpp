@@ -2,11 +2,12 @@
 
 Game::Game(){
   _drawer = new Drawer();
-  _on_key = 0;
+  _keys = new Keys();
 }
 
 void Game::update(){
 
+  _keys->reset();
 }
 
 void Game::draw(){
@@ -14,5 +15,5 @@ void Game::draw(){
 }
 
 void Game::keyOn(int c){
-
+  _keys->setOn(c);
 }

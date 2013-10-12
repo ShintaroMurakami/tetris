@@ -1,10 +1,11 @@
 #pragma once
 #include "draw.h"
+#include "keys.h"
 #include <unistd.h>
 
 class Game {
   Drawer * _drawer;
-  int _on_key;
+  Keys   * _keys;
 
 public:
   Game();
