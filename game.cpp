@@ -3,6 +3,7 @@
 Game::Game(){
   _keys = new Keys();
   _drawer = new Drawer(_keys);
+  _field = new Field();
 }
 
 void Game::update(){
@@ -11,7 +12,8 @@ void Game::update(){
 }
 
 void Game::draw(){
-  _drawer->print();
+  _field->draw();
+
 }
 
 void Game::keyOn(int c){
