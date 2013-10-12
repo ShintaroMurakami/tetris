@@ -1,0 +1,13 @@
+#pragma once
+#include "draw.h"
+#include <unistd.h>
+
+class Game {
+
+public:
+  Game();
+    void run();
+    void update();
+    void draw();
+
+};
