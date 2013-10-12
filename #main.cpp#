@@ -1,0 +1,22 @@
+#include <iostream>
+#include <unistd.h>
+#include "game.h"
+#include "util.h"
+
+void run(Game * game){
+  while(1){
+    game->update();
+    game->draw();
+    if(kbhit()){
+      game->keyOn(getchar());
+    } 
+    usleep(33000);
+  }
+}
+
+int main(){
+  printf("\033[2J"); //画面クリア
+  Game * game = new Game();
+  run(game);
+  return 0;
+}
