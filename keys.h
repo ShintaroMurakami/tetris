@@ -8,7 +8,7 @@ class Keys {
   bool _roll_l;
   int _key;
 public:
-  Key();
+  Keys();
   void setOn(int c);
   void reset();
-}
+};
