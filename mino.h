@@ -2,6 +2,8 @@
 #include "field.h"
 #include "Keys.h"
 
+enum {DIR_R, DIR_L};
+
 class Mino {
   int _shape[4][2];
   int _pos_x;
@@ -18,4 +20,5 @@ public:
   bool move(int key);
   void fix();
   bool hitBottomFlag();
+  void roll(int direction);
 };

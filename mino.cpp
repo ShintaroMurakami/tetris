@@ -50,8 +50,11 @@ void Mino::update(){
       break;
     }
   }
-  if(key != KEY_NUM){
+  if(key <= KEY_UP){
     move(key);
+  }else if(key < KEY_NUM){
+    if(key == KEY_ROLL_R) roll(DIR_R);
+    if(key == KEY_ROLL_L) roll(DIR_L);
   }
 }
 
@@ -96,4 +99,93 @@ bool Mino::move(int key){
 
 bool Mino::hitBottomFlag(){
   return _hit_bottom_flag;
+}
+
+void Mino::roll(int direction){
+  int next_shape[4][2];
+  int next_x = _pos_x;
+  int next_y = _pos_y;
+  bool hit_r = false;
+  bool hit_l = false;
+  
+  for(int k = 0; k < 4; k++){
+    if(direction == DIR_L){
+      next_shape[k][0] = - _shape[k][1];
+      next_shape[k][1] =   _shape[k][0];
+    }else{
+      next_shape[k][0] =   _shape[k][1];
+      next_shape[k][1] = - _shape[k][0];
+    }
+  }
+
+  _field->removeShape(_pos_x, _pos_y, _shape);
+
+  //回転して壁にぶつかるか判定
+  for(int k = 0; k < 4; k++){
+    int x = next_x + next_shape[k][0];
+    int y = next_y + next_shape[k][1];
+    if(_field->hitPos(x, y)){
+      if(next_shape[k][0] < 0){
+        hit_l = true;
+      }
+      if(next_shape[k][0] > 0){
+        hit_r = true;
+      }
+    }
+  }
+  
+  //両側がぶつかった場合
+  if(hit_l && hit_r) return;
+
+  //片側がぶつかった場合
+  if(hit_l || hit_r){
+    if(hit_r){
+      while(hit_r){
+        hit_r = false;
+        next_x -= 2;
+        for(int k = 0; k < 4; k++){
+          int x = next_x + next_shape[k][0];
+          int y = next_y + next_shape[k][1];
+          if(_field->hitPos(x, y)){
+            if(next_shape[k][0] < 0){
+              return;//左がつかえているので
+            }
+            if(next_shape[k][0] > 0){
+              hit_r = true;
+            }
+          }
+        }
+      }
+    }
+    if(hit_l){
+      while(hit_l){
+        hit_l = false;
+        next_x += 2;
+        for(int k = 0; k < 4; k++){
+          int x = next_x + next_shape[k][0];
+          int y = next_y + next_shape[k][1];
+          if(_field->hitPos(x, y)){
+            if(next_shape[k][0] < 0){
+              hit_l = true;
+            }
+            if(next_shape[k][0] > 0){
+              return;//右がつかえているので
+            }
+          }
+        }
+      }
+    }
+  }
+
+  //回転成功
+  _pos_x = next_x;
+  _pos_y = next_y;
+  
+  for(int k = 0; k < 4; k++){
+    for(int l = 0; l < 2; l++){
+      _shape[k][l] = next_shape[k][l];
+    }
+  }
+  _field->putShape(_pos_x, _pos_y, _shape);
+  
 }
