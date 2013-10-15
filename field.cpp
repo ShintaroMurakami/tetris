@@ -12,7 +12,8 @@ int yToI(int y){
 Field::Field(){
   for(int i = 0; i < GAME_HEIGHT; i++){
     for(int j = 0; j < GAME_WIDTH; j++){
-      _map[i][j] = false;
+      if(i > j + 8) _map[i][j] = true;
+      else _map[i][j] = false;
     }
   }
 }
@@ -37,7 +38,7 @@ void Field::draw(){
   }
 }
 
-bool inTheFeeld(int i, int j){
+bool inTheField(int i, int j){
   if((i < 0) || (i >= GAME_HEIGHT)) return false;
   if((j < 0) || (j >= GAME_WIDTH )) return false;
   return true;
@@ -47,7 +48,7 @@ void Field::putShape(int x, int y, int (*shape)[2]){
   for(int k = 0; k < 4; k++){
     int i = yToI(y+shape[k][1]);
     int j = xToJ(x+shape[k][0]);
-    if(inTheFeeld(i, j)) _map[i][j] = true;
+    if(inTheField(i, j)) _map[i][j] = true;
   }
 }
 
@@ -55,23 +56,22 @@ void Field::removeShape(int x, int y, int (*shape)[2]){
   for(int k = 0; k < 4; k++){
     int i = yToI(y+shape[k][1]);
     int j = xToJ(x+shape[k][0]);
-    if(inTheFeeld(i, j)) _map[i][j] = false;
+    if(inTheField(i, j)) _map[i][j] = false;
   }
 }
 
-bool Field::pointHit(int x, int y){
+bool Field::hitPos(int x, int y){
   int i = yToI(y);
   int j = xToJ(x);
   if(i >= GAME_HEIGHT) return true;
   if((j < 0) || (j >= GAME_WIDTH )) return true;
-  if(_map[i][j]) return true;
-  return false;
+  if(i < 0) return false;//上は空間
+  return _map[i][j];
 }
 
-bool Field::shapeHit(int x, int y, int (*shape)[2]){
+bool Field::hitShape(int x, int y, int (*shape)[2]){
   for(int k = 0; k < 4; k++){
-    if(pointHit(x+shape[k][0], y+shape[k][1]))
-      return true;
+    if(hitPos(x+shape[k][0], y+shape[k][1])) return true;
   }
   return false;
 }

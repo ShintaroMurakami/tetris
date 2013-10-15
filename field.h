@@ -12,7 +12,7 @@ public:
   void draw();
   void putShape(int x, int y, int (*shape)[2]);
   void removeShape(int x, int y, int (*shape)[2]);
-  bool pointHit(int x, int y);
-  bool shapeHit(int x, int y, int (*shape)[2]);
+  bool hitPos(int x, int y);
+  bool hitShape(int x, int y, int (*shape)[2]);
 
 };

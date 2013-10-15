@@ -32,27 +32,35 @@ void Mino::update(){
 }
 
 bool Mino::move(int key){
-  _next_x = _pos_x;
-  _next_y = _pos_y;
+  int next_x = _pos_x;
+  int next_y = _pos_y;
   switch (key){
-  case KEY_UP:
-    _next_y = _pos_y - 2;
-    break;
-  case KEY_DOWN:
-    _next_y = _pos_y + 2;
-    break;
-  case KEY_LEFT:
-    _next_x = _pos_x - 2;
-    break;
-  case KEY_RIGHT:
-    _next_x = _pos_x + 2;
-    break;
-  default:
-    break;
+    case KEY_UP:
+      next_y = _pos_y - 2;
+      break;
+    case KEY_DOWN:
+      next_y = _pos_y + 2;
+      break;
+    case KEY_LEFT:
+      next_x = _pos_x - 2;
+      break;
+    case KEY_RIGHT:
+      next_x = _pos_x + 2;
+      break;
+    default:
+      break;
   }
-  _field->removeShape(_pos_x, _pos_y, _shape);
-  _field->putShape(_next_x, _next_y, _shape);
 
-  _pos_x = _next_x;
-  _pos_y = _next_y;
+  _field->removeShape(_pos_x, _pos_y, _shape);
+
+  if(_field->hitShape(next_x, next_y, _shape)){
+    _field->putShape(_pos_x, _pos_y, _shape);
+    return false;
+  }
+  
+  _field->putShape(next_x, next_y, _shape);
+
+  _pos_x = next_x;
+  _pos_y = next_y;
+  return true;
 }
