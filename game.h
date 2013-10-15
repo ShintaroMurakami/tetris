@@ -19,5 +19,6 @@ public:
   void update();
   void draw();
   void keyOn(int c);
+  void putMino();
 
 };

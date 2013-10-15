@@ -4,7 +4,7 @@
 
 class Field {
   bool _map[GAME_HEIGHT][GAME_WIDTH];
- 
+  bool _delete_lines[GAME_HEIGHT];
 
 public:
   Field();
@@ -14,5 +14,7 @@ public:
   void removeShape(int x, int y, int (*shape)[2]);
   bool hitPos(int x, int y);
   bool hitShape(int x, int y, int (*shape)[2]);
+  bool deleteTest();
+  void deleteLines();
 
 };

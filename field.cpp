@@ -75,3 +75,32 @@ bool Field::hitShape(int x, int y, int (*shape)[2]){
   }
   return false;
 }
+
+bool Field::deleteTest(){
+  bool delete_flag = false;
+  for(int i = 0; i < GAME_HEIGHT; i++){
+    int j;
+    for(j = 0; j < GAME_WIDTH; j++){
+      if(!_map[i][j]) break;
+    }
+    if(j == GAME_WIDTH){
+      _delete_lines[i] = true;
+      delete_flag = true;
+    }else _delete_lines[i] = false;
+  }
+  return delete_flag;
+}
+
+void Field::deleteLines(){
+  int delete_counter = 0;
+  for(int i = GAME_HEIGHT-1; i >= 0; i--){
+    if(_delete_lines[i]){
+      delete_counter++;
+    }
+    if(delete_counter >= 0){
+      for(int j = 0; j < GAME_WIDTH; j++){
+        _map[i][j] = i - delete_counter >= 0 ? _map[i-delete_counter][j] : false;
+      }
+    }
+  }
+}

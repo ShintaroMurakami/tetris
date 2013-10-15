@@ -5,12 +5,21 @@ int g_mino_shape[MINO_TYPE_NUM][4][2] = {
   {{ 1, 1}, {-1, 1}, {-1,-1}, { 1,-1}}//四角
 };
 
+int g_mino_default_pos[MINO_TYPE_NUM][2] = {
+  {GAME_WIDTH/2*2, -2}
+};
+
 Mino::Mino(Keys * keys, Field * field){
   _keys = keys;
   _field = field;
-  _pos_x = GAME_WIDTH;
-  _pos_y = GAME_HEIGHT; 
+  refresh();
+}
+
+void Mino::refresh(){
   int type = 0;
+  _fixed = false;
+  _pos_x = g_mino_default_pos[type][0];
+  _pos_y = g_mino_default_pos[type][1];
   for(int i = 0; i < 4; i++){
     for(int j = 0; j < 2; j++){
       _shape[i][j] = g_mino_shape[type][i][j];
@@ -20,6 +29,7 @@ Mino::Mino(Keys * keys, Field * field){
 }
 
 void Mino::update(){
+  if(_fixed) return;
   int key;
   for(key = 0; key < KEY_NUM; key++){
     if(_keys->getKey(key)){
@@ -29,6 +39,10 @@ void Mino::update(){
   if(key != KEY_NUM){
     move(key);
   }
+}
+
+void Mino::fix(){
+  _fixed = true;
 }
 
 bool Mino::move(int key){
