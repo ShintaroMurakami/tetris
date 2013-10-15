@@ -22,6 +22,14 @@ void Field::update(){
 
 }
 
+void Field::updateAsDeleteAnimation(bool visible){
+  for(int i = 0; i < GAME_HEIGHT; i++){
+    for(int j = 0; j < GAME_WIDTH; j++){
+      if(_delete_lines[i]) _map[i][j] = visible;
+    }
+  }
+}
+
 void Field::draw(){
   printf("\033[%d;%dH" , 0, 0); 
 

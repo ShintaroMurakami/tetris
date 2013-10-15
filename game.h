@@ -12,11 +12,13 @@ class Game {
   Mino   * _mino;
   int _turn_counter;
   int _turn_length;
+  int _delete_animation_counter;
 
 public:
   Game();
   void run();
   void update();
+  void updateAsDeleteAnimation();
   void draw();
   void keyOn(int c);
   void putMino();

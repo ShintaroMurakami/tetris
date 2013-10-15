@@ -9,6 +9,7 @@ class Field {
 public:
   Field();
   void update();
+  void updateAsDeleteAnimation(bool visible);
   void draw();
   void putShape(int x, int y, int (*shape)[2]);
   void removeShape(int x, int y, int (*shape)[2]);
