@@ -1,9 +1,0 @@
-#include "mino.h"
-
-Mino::Mino(){
-
-}
-
-Mino::update(){
-
-}

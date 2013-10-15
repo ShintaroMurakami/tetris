@@ -1,8 +1,0 @@
-CC=g++
-OBJS=draw.cpp field.cpp game.cpp main.cpp
-
-all:
-	$(CC) -g $(OBJS)
-
-clean:
-	rm a.out
