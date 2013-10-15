@@ -1,12 +1,25 @@
 #include "mino.h"
-#define MINO_TYPE_NUM 1
+#include <stdlib.h>
+#define MINO_TYPE_NUM 7
 
 int g_mino_shape[MINO_TYPE_NUM][4][2] = {
-  {{ 1, 1}, {-1, 1}, {-1,-1}, { 1,-1}}//四角
+  {{-3,-1}, {-1,-1}, { 1,-1}, { 3,-1}},//長い
+  {{ 1, 1}, {-1, 1}, {-1,-1}, { 1,-1}},
+  {{-2, 0}, { 0, 0}, { 0,-2}, { 2,-2}},
+  {{-2,-2}, { 0,-2}, { 0, 0}, { 2, 0}},
+  {{-2,-2}, {-2, 0}, { 0, 0}, { 2, 0}},
+  {{-2, 0}, { 0, 0}, { 2, 0}, { 2,-2}},
+  {{-2, 0}, { 0, 0}, { 0,-2}, { 2, 0}}
 };
 
 int g_mino_default_pos[MINO_TYPE_NUM][2] = {
-  {GAME_WIDTH/2*2, -2}
+  {GAME_WIDTH/2*2  , -2},
+  {GAME_WIDTH/2*2  , -2},
+  {GAME_WIDTH/2*2+1, -1},
+  {GAME_WIDTH/2*2+1, -1},
+  {GAME_WIDTH/2*2+1, -1},
+  {GAME_WIDTH/2*2+1, -1},
+  {GAME_WIDTH/2*2+1, -1}
 };
 
 Mino::Mino(Keys * keys, Field * field){
@@ -16,7 +29,7 @@ Mino::Mino(Keys * keys, Field * field){
 }
 
 void Mino::refresh(){
-  int type = 0;
+  int type = rand() % MINO_TYPE_NUM;
   _fixed = false;
   _hit_bottom_flag = false;
   _pos_x = g_mino_default_pos[type][0];

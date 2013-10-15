@@ -32,15 +32,19 @@ void Game::updateAsDeleteAnimation(){
   bool visible = _delete_animation_counter / (DELETE_ANIMETION_LENGTH / 4) % 2;
   _field->updateAsDeleteAnimation(visible);
   _delete_animation_counter--;
-  if(_delete_animation_counter == 0) _field->deleteLines();
+  if(_delete_animation_counter == 0){
+    _field->deleteLines();
+    _mino->refresh();
+  }
 }
 
 void Game::putMino(){
   _mino->fix();
   if(_field->deleteTest()){
     _delete_animation_counter = DELETE_ANIMETION_LENGTH;
+  }else{
+    _mino->refresh();
   }
-  _mino->refresh();
 }
 
 void Game::draw(){
