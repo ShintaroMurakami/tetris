@@ -19,9 +19,11 @@ void Game::update(){
   _mino->update();
   _keys->reset();
   if(_turn_counter >= _turn_length){
-    bool moved = _mino->move(KEY_DOWN);
-    if(!moved) putMino();
+    _mino->move(KEY_DOWN);
     _turn_counter = 0;
+  }
+  if(_mino->hitBottomFlag()){
+    putMino();
   }
   _turn_counter++;
 }
@@ -48,3 +50,4 @@ void Game::draw(){
 void Game::keyOn(int c){
   _keys->setOn(c);
 }
+

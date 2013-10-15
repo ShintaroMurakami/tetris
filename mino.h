@@ -7,6 +7,7 @@ class Mino {
   int _pos_x;
   int _pos_y;
   bool _fixed;
+  bool _hit_bottom_flag;
   Keys  * _keys;
   Field * _field;
 
@@ -16,4 +17,5 @@ public:
   void update();
   bool move(int key);
   void fix();
+  bool hitBottomFlag();
 };

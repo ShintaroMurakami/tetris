@@ -18,6 +18,7 @@ Mino::Mino(Keys * keys, Field * field){
 void Mino::refresh(){
   int type = 0;
   _fixed = false;
+  _hit_bottom_flag = false;
   _pos_x = g_mino_default_pos[type][0];
   _pos_y = g_mino_default_pos[type][1];
   for(int i = 0; i < 4; i++){
@@ -69,6 +70,7 @@ bool Mino::move(int key){
 
   if(_field->hitShape(next_x, next_y, _shape)){
     _field->putShape(_pos_x, _pos_y, _shape);
+    if(next_y > _pos_y) _hit_bottom_flag = true;
     return false;
   }
   
@@ -77,4 +79,8 @@ bool Mino::move(int key){
   _pos_x = next_x;
   _pos_y = next_y;
   return true;
+}
+
+bool Mino::hitBottomFlag(){
+  return _hit_bottom_flag;
 }
