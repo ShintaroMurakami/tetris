@@ -10,6 +10,8 @@ class Game {
   Keys   * _keys;
   Field  * _field;
   Mino   * _mino;
+  int _turn_counter;
+  int _turn_length;
 
 public:
   Game();
