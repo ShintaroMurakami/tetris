@@ -1,6 +1,7 @@
 #include "mino.h"
 #include <stdlib.h>
 #define MINO_TYPE_NUM 7
+#define abs(n) (n > 0 ? n : -n)
 
 int g_mino_shape[MINO_TYPE_NUM][4][2] = {
   {{-3,-1}, {-1,-1}, { 1,-1}, { 3,-1}},//長い
@@ -107,6 +108,7 @@ void Mino::roll(int direction){
   int next_y = _pos_y;
   bool hit_r = false;
   bool hit_l = false;
+  bool hit_b = false;
   
   for(int k = 0; k < 4; k++){
     if(direction == DIR_L){
@@ -125,17 +127,23 @@ void Mino::roll(int direction){
     int x = next_x + next_shape[k][0];
     int y = next_y + next_shape[k][1];
     if(_field->hitPos(x, y)){
-      if(next_shape[k][0] < 0){
+      if(next_shape[k][0] < -1){
         hit_l = true;
       }
-      if(next_shape[k][0] > 0){
+      if(next_shape[k][0] >  1){
         hit_r = true;
+      }
+      if((abs(next_shape[k][0]) <= 1)&&(next_shape[k][1] > 0)){
+        hit_b = true;
       }
     }
   }
   
   //両側がぶつかった場合
-  if(hit_l && hit_r) return;
+  if(hit_l && hit_r){
+    _field->putShape(_pos_x, _pos_y, _shape);
+    return;
+  }
 
   //片側がぶつかった場合
   if(hit_l || hit_r){
@@ -147,10 +155,11 @@ void Mino::roll(int direction){
           int x = next_x + next_shape[k][0];
           int y = next_y + next_shape[k][1];
           if(_field->hitPos(x, y)){
-            if(next_shape[k][0] < 0){
+            if(next_shape[k][0] < -1){
+              _field->putShape(_pos_x, _pos_y, _shape);
               return;//左がつかえているので
             }
-            if(next_shape[k][0] > 0){
+            if(next_shape[k][0] >  1){
               hit_r = true;
             }
           }
@@ -165,10 +174,11 @@ void Mino::roll(int direction){
           int x = next_x + next_shape[k][0];
           int y = next_y + next_shape[k][1];
           if(_field->hitPos(x, y)){
-            if(next_shape[k][0] < 0){
+            if(next_shape[k][0] < -1){
               hit_l = true;
             }
-            if(next_shape[k][0] > 0){
+            if(next_shape[k][0] >  1){
+              _field->putShape(_pos_x, _pos_y, _shape);
               return;//右がつかえているので
             }
           }
@@ -176,6 +186,35 @@ void Mino::roll(int direction){
       }
     }
   }
+
+  //下にぶつかった場合の処理
+  if(hit_b){
+    while(hit_b){
+      hit_b = false;
+      next_y -= 2;
+      for(int k = 0; k < 4; k++){
+        int x = next_x + next_shape[k][0];
+        int y = next_y + next_shape[k][1];
+        if(_field->hitPos(x, y)){
+          if(next_shape[k][0] < -1){
+            _field->putShape(_pos_x, _pos_y, _shape);
+            return;//左がつかえているので
+          }
+          if(next_shape[k][0] > 1){
+            _field->putShape(_pos_x, _pos_y, _shape);
+            return;//右がつかえているので
+          }
+          if((abs(next_shape[k][0]) <= 1)&&(next_shape[k][1] > 0)){
+            hit_b = true;
+          }
+        }
+      }
+    }
+  }
+  // if(hit_b){
+  //   _field->putShape(_pos_x, _pos_y, _shape);//下があたってたら回転をとりやめる
+  //   return;
+  // }
 
   //回転成功
   _pos_x = next_x;

@@ -12,8 +12,7 @@ int yToI(int y){
 Field::Field(){
   for(int i = 0; i < GAME_HEIGHT; i++){
     for(int j = 0; j < GAME_WIDTH; j++){
-      if(i > j + 8) _map[i][j] = true;
-      else _map[i][j] = false;
+      _map[i][j] = false;
     }
   }
 }
