@@ -5,24 +5,24 @@ Keys::Keys(){
 }
 
 void Keys::setOn(int c){
-  if(c == 67) _right = true;
-  if(c == 68) _left = true;
-  if(c == 66) _down = true;
-  // if(c == 65) _up = true;
-  if(c == 32) _roll_r = true;//space
+  if(c == 67) _key[KEY_RIGHT ] = true;
+  if(c == 68) _key[KEY_LEFT  ] = true;
+  if(c == 66) _key[KEY_DOWN  ] = true;
+  if(c == 65) _key[KEY_UP    ] = true;
+  if(c == 32) _key[KEY_ROLL_R] = true;//space
 
-  _key = c;
+  _c = c;
 }
 
 void Keys::reset(){
-  _right = false;
-  _left  = false;
-  _down  = false;
-  _roll_r = false;
-  _roll_l = false;
-  _key = 0;
+  for(int i = 0; i < KEY_NUM; i++){
+    _key[i] = 0;
+  }
+  _c = 0;
 }
 
-int Keys::getKey(){
-  return _key;
+bool Keys::getKey(int key){
+  if(key >= KEY_NUM) return false;
+  if(key < 0) return false;
+  return _key[key];
 }

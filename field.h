@@ -10,5 +10,7 @@ public:
   Field();
   void update();
   void draw();
+  void putShape(int x, int y, int (*shape)[2]);
+  void removeShape(int x, int y, int (*shape)[2]);
 
 };

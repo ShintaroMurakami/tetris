@@ -1,5 +1,5 @@
 CC=g++
-OBJS=field.cpp game.cpp util.cpp keys.cpp main.cpp
+OBJS=field.cpp game.cpp util.cpp keys.cpp mino.cpp main.cpp
 
 all:
 	$(CC) -g $(OBJS)
