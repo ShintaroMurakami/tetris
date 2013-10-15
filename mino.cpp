@@ -20,14 +20,20 @@ Mino::Mino(Keys * keys, Field * field){
 }
 
 void Mino::update(){
-  _next_x = _pos_x;
-  _next_y = _pos_y;
   int key;
   for(key = 0; key < KEY_NUM; key++){
     if(_keys->getKey(key)){
       break;
     }
   }
+  if(key != KEY_NUM){
+    move(key);
+  }
+}
+
+bool Mino::move(int key){
+  _next_x = _pos_x;
+  _next_y = _pos_y;
   switch (key){
   case KEY_UP:
     _next_y = _pos_y - 2;
@@ -44,13 +50,6 @@ void Mino::update(){
   default:
     break;
   }
-  if((_next_x != _pos_x) || (_next_y != _pos_y)){
-    move();
-  }
-  
-}
-
-bool Mino::move(){
   _field->removeShape(_pos_x, _pos_y, _shape);
   _field->putShape(_next_x, _next_y, _shape);
 

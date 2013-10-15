@@ -15,5 +15,5 @@ class Mino {
 public:
   Mino(Keys * keys, Field * field);
   void update();
-  bool move();
+  bool move(int key);
 };

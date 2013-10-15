@@ -58,3 +58,20 @@ void Field::removeShape(int x, int y, int (*shape)[2]){
     if(inTheFeeld(i, j)) _map[i][j] = false;
   }
 }
+
+bool Field::pointHit(int x, int y){
+  int i = yToI(y);
+  int j = xToJ(x);
+  if(i >= GAME_HEIGHT) return true;
+  if((j < 0) || (j >= GAME_WIDTH )) return true;
+  if(_map[i][j]) return true;
+  return false;
+}
+
+bool Field::shapeHit(int x, int y, int (*shape)[2]){
+  for(int k = 0; k < 4; k++){
+    if(pointHit(x+shape[k][0], y+shape[k][1]))
+      return true;
+  }
+  return false;
+}
